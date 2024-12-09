@@ -99,6 +99,7 @@ smartphone = SmartPhone(4,16,["MegaCom"])
 smartphone.use_gps("park Gorky")
 smartphone.call(1,"996111222333")
 print(smartphone)
+# 
 
 
 
