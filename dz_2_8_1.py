@@ -15,7 +15,11 @@ def extract_cities(connection):
     return cursor.fetchall()
 
 def extract_students_by_city(connection, city_id):
-    sql_extract_students = '''SELECT first_name, last_name FROM students WHERE city_id = ?'''
+    sql_extract_students = '''SELECT s.first_name, s.last_name, c.title AS city, co.title AS country, c.area
+                              FROM students s
+                              JOIN cities c ON s.city_id = c.id
+                              JOIN countries co ON c.country_id = co.id
+                              WHERE c.id = ?'''
     cursor = connection.cursor()
     cursor.execute(sql_extract_students, (city_id,))
     return cursor.fetchall()
@@ -51,7 +55,7 @@ def start():
             if students:
                 print("Список учеников:")
                 for student in students:
-                    print(f"{student[0]} {student[1]}")
+                    print(f"Имя: {student[0]}, Фамилия: {student[1]}, Страна: {student[3]}, Город: {student[2]}, Площадь города: {student[4]}")
             else:
                 print("Нет учеников в этом городе.")
         else:
